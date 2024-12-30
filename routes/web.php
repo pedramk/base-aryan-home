@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('hr/person/create', [HRController::class, 'create']);
+Route::post('hr/person/create', [HRController::class, 'store']);

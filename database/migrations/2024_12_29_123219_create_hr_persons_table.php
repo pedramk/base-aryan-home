@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('personal_code')->unique();
             $table->string('national_id')->unique();
-            $table->string('birthdate');
+            $table->date('birthdate');
             $table->text('address');
-            $table->string('job_start_date');
-            $table->string('nationality');
-            $table->string('email')->unique();
+            $table->date('job_start_date');
+            $table->string('nationality', 2);
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });

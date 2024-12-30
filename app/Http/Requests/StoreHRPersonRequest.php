@@ -23,7 +23,14 @@ class StoreHRPersonRequest extends FormRequest
     {
         return [
             'first_name' => 'required',
-            'last_name' => 'required',
+            // 'last_name' => 'required',
+            // 'mobile' => 'required',
+            // 'birthdate' => 'required',
+            // 'national_code' => 'required',
+            // 'personal_code' => 'required',
+            // 'nationality' => 'required',
+            // 'job_start_date' => 'required',
+            // 'address' => 'required',
         ];
     }
 }

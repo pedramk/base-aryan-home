@@ -11,7 +11,6 @@ enum RolesEnum: string
     case WAREHOUSEKEEPER = 'warehouse-keeper';
     case WAREHOUSEWORKER = 'warehouse-worker';
 
-    // extra helper to allow for greater customization of displayed values, without disclosing the name/value data directly
     public function label(): string
     {
         return match ($this) {
@@ -22,5 +21,13 @@ enum RolesEnum: string
             static::WAREHOUSEKEEPER => 'انباردار',
             static::WAREHOUSEWORKER => 'کارگر انبار',
         };
+    }
+
+    public static function optionsArray(): array
+    {
+        return array_combine(
+            array_column(static::cases(), 'value'),
+            array_map(fn($case) => $case->label(), static::cases())
+        );
     }
 }
