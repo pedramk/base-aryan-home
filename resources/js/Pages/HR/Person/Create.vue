@@ -12,6 +12,7 @@ const props = defineProps({
     jobs: Object,
     nationalities: Object,
     months: Object,
+    provinces: Object,
 });
 
 const person = useForm({
@@ -25,6 +26,7 @@ const person = useForm({
     },
     personal_code: null,
     national_id: null,
+    pob: null,
     nationality: null,
     job_title: null,
     job_start_date: {
@@ -32,7 +34,10 @@ const person = useForm({
         month: null,
         year: null,
     },
+    province: null,
+    city: null,
     address: null,
+    create_account: false,
 });
 
 const zeroPad = (num, places) => String(num).padStart(places, "0");
@@ -128,9 +133,28 @@ const submitPerson = () => {
                             id="person-mobile"
                             v-model="person.mobile"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="09125437413"
-                            pattern="^(\+98|0)?9\d{9}$"
                         />
+                    </div>
+                    <div>
+                        <label
+                            for="person-province"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >محل تولد</label
+                        >
+                        <select
+                            id="person-pob"
+                            v-model="person.pob"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                            <option disabled selected>انتخاب استان</option>
+                            <option
+                                v-for="(label, value, index) in provinces"
+                                :value="value"
+                                :key="index"
+                            >
+                                {{ label }}
+                            </option>
+                        </select>
                     </div>
                     <div>
                         <label
@@ -184,19 +208,6 @@ const submitPerson = () => {
                     </div>
                     <div>
                         <label
-                            for="person-pid"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >کد پرسنلی</label
-                        >
-                        <input
-                            type="text"
-                            id="person-pid"
-                            v-model="person.personal_code"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label
                             for="person-national-id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >کد ملی</label
@@ -205,6 +216,26 @@ const submitPerson = () => {
                             type="text"
                             id="person-national-id"
                             v-model="person.national_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                </div>
+                <div
+                    class="border-b mb-4 pb-2 text-gray-900 dark:text-white dark:border-gray-700"
+                >
+                    اطلاعات شغلی
+                </div>
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label
+                            for="person-pid"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >کد پرسنلی</label
+                        >
+                        <input
+                            type="text"
+                            id="person-pid"
+                            v-model="person.personal_code"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                     </div>
@@ -271,7 +302,7 @@ const submitPerson = () => {
                                 <option disabled selected>سال</option>
                                 <option
                                     v-for="day in 10"
-                                    :value="day + 1350"
+                                    :value="day + 1394"
                                     :key="day"
                                 >
                                     {{ day + 1394 }}
@@ -279,19 +310,6 @@ const submitPerson = () => {
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="flex items-center mb-6">
-                    <input
-                        id="create-account"
-                        type="checkbox"
-                        value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label
-                        for="create-account"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >ساخت حساب کاربری و رمز عبور در سامانه</label
-                    >
                 </div>
                 <div
                     class="border-b mb-4 pb-2 text-gray-900 dark:text-white dark:border-gray-700"
@@ -305,12 +323,20 @@ const submitPerson = () => {
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                             >استان</label
                         >
-                        <input
-                            type="text"
+                        <select
                             id="person-province"
-                            v-model="person.last_name"
+                            v-model="person.province"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        />
+                        >
+                            <option disabled selected>انتخاب استان</option>
+                            <option
+                                v-for="(label, value, index) in provinces"
+                                :value="value"
+                                :key="index"
+                            >
+                                {{ label }}
+                            </option>
+                        </select>
                     </div>
                     <div>
                         <label
@@ -321,7 +347,7 @@ const submitPerson = () => {
                         <input
                             type="text"
                             id="person-city"
-                            v-model="person.last_name"
+                            v-model="person.city"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                     </div>
@@ -338,6 +364,31 @@ const submitPerson = () => {
                         v-model="person.address"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
+                </div>
+                <hr class="h-px mb-6 bg-gray-200 border-0 dark:bg-gray-700" />
+                <div class="flex mb-6">
+                    <div class="flex items-center h-5">
+                        <input
+                            id="create-account"
+                            aria-describedby="helper-checkbox-text"
+                            type="checkbox"
+                            v-model="person.create_account"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
+                    </div>
+                    <div class="ms-2 text-sm">
+                        <label
+                            for="create-account"
+                            class="font-medium text-gray-900 dark:text-gray-300"
+                            >ساخت حساب کاربری و رمز عبور در سامانه</label
+                        >
+                        <p
+                            id="create-account-text"
+                            class="text-xs font-normal text-gray-500 dark:text-gray-300"
+                        >
+                            رمز عبور پس ساخت پرسنل نمایش داده خواهد شد.
+                        </p>
+                    </div>
                 </div>
                 <button
                     type="submit"

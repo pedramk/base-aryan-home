@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -12,13 +13,13 @@ return new class extends Migration {
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uid')->default(DB::raw('(UUID())'));
             $table->string('first_name');
             $table->string('last_name');
             $table->string('personal_code')->unique();
             $table->string('national_id')->unique();
             $table->string('mobile', 11)->unique();
             $table->date('birthdate');
-            $table->text('address');
             $table->string('job_title');
             $table->date('job_start_date');
             $table->string('nationality', 2);
