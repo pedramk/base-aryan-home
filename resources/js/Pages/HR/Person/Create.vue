@@ -1,13 +1,17 @@
 <script setup>
+import { inject } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import { IconUserFilled } from "@tabler/icons-vue";
 
 defineOptions({ layout: AuthenticatedLayout });
 
+const notify = inject("notify");
+
 const props = defineProps({
     jobs: Object,
     nationalities: Object,
+    months: Object,
 });
 
 const person = useForm({
@@ -31,13 +35,19 @@ const person = useForm({
     address: null,
 });
 
+const zeroPad = (num, places) => String(num).padStart(places, "0");
+
 const submitPerson = () => {
-    console.log(person);
     person
         .transform((data) => ({
             ...data,
         }))
-        .post("/hr/people/create");
+        .post("/hr/people/create", {
+            preserveState: true,
+            onSuccess: () => {
+                notify.success("پرسنل با موفقیت افزوده شد.");
+            },
+        });
 };
 </script>
 
@@ -46,7 +56,7 @@ const submitPerson = () => {
 
     <div class="">
         <div
-            class="flex items-center p-6 border-b text-gray-900 dark:text-white dark:border-gray-700"
+            class="flex items-center p-6 sm:p-8 border-b text-gray-900 dark:text-white dark:border-gray-700"
         >
             <IconUserFilled :size="20" />
             <h1 class="ms-1">افزودن پرسنل جدید</h1>
@@ -90,17 +100,18 @@ const submitPerson = () => {
                         <label
                             for="person-nationality"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            >تابعیت</label
+                            >ملیت</label
                         >
                         <select
                             id="person-nationality"
                             v-model="person.nationality"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
-                            <option disabled selected>انتخاب تابعیت</option>
+                            <option disabled selected>انتخاب ملیت</option>
                             <option
-                                v-for="(label, value) in nationalities"
+                                v-for="(label, value, index) in nationalities"
                                 :value="value"
+                                :key="index"
                             >
                                 {{ label }}
                             </option>
@@ -127,27 +138,48 @@ const submitPerson = () => {
                             >تاریخ تولد</label
                         >
                         <div class="grid gap-6 grid-cols-3">
-                            <input
-                                type="text"
+                            <select
                                 id="person-birth-day"
                                 v-model="person.birthdate.day"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="روز"
-                            />
-                            <input
-                                type="text"
+                            >
+                                <option disabled selected>روز</option>
+                                <option
+                                    v-for="day in 31"
+                                    :value="zeroPad(day, 2)"
+                                    :key="day"
+                                >
+                                    {{ day }}
+                                </option>
+                            </select>
+                            <select
                                 id="person-birth-month"
                                 v-model="person.birthdate.month"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="ماه"
-                            />
-                            <input
-                                type="text"
+                            >
+                                <option disabled selected>ماه</option>
+                                <option
+                                    v-for="(label, value, index) in months"
+                                    :value="value"
+                                    :key="index"
+                                >
+                                    {{ label }}
+                                </option>
+                            </select>
+                            <select
                                 id="person-birth-year"
                                 v-model="person.birthdate.year"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="سال"
-                            />
+                            >
+                                <option disabled selected>سال</option>
+                                <option
+                                    v-for="day in 40"
+                                    :value="day + 1350"
+                                    :key="day"
+                                >
+                                    {{ day + 1350 }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div>
@@ -189,8 +221,9 @@ const submitPerson = () => {
                         >
                             <option disabled selected>انتخاب عنوان شغلی</option>
                             <option
-                                v-for="(label, value) in jobs"
+                                v-for="(label, value, index) in jobs"
                                 :value="value"
+                                :key="index"
                             >
                                 {{ label }}
                             </option>
@@ -202,28 +235,95 @@ const submitPerson = () => {
                             >تاریخ شروع کار</label
                         >
                         <div class="grid gap-6 grid-cols-3">
-                            <input
-                                type="text"
+                            <select
                                 id="person-job-start-day"
                                 v-model="person.job_start_date.day"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="روز"
-                            />
-                            <input
-                                type="text"
+                            >
+                                <option disabled selected>روز</option>
+                                <option
+                                    v-for="day in 31"
+                                    :value="zeroPad(day, 2)"
+                                    :key="day"
+                                >
+                                    {{ day }}
+                                </option>
+                            </select>
+                            <select
                                 id="person-job-start-month"
                                 v-model="person.job_start_date.month"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="ماه"
-                            />
-                            <input
-                                type="text"
+                            >
+                                <option disabled selected>ماه</option>
+                                <option
+                                    v-for="(label, value, index) in months"
+                                    :value="value"
+                                    :key="index"
+                                >
+                                    {{ label }}
+                                </option>
+                            </select>
+                            <select
                                 id="person-job-start-year"
                                 v-model="person.job_start_date.year"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="سال"
-                            />
+                            >
+                                <option disabled selected>سال</option>
+                                <option
+                                    v-for="day in 10"
+                                    :value="day + 1350"
+                                    :key="day"
+                                >
+                                    {{ day + 1394 }}
+                                </option>
+                            </select>
                         </div>
+                    </div>
+                </div>
+                <div class="flex items-center mb-6">
+                    <input
+                        id="create-account"
+                        type="checkbox"
+                        value=""
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                        for="create-account"
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >ساخت حساب کاربری و رمز عبور در سامانه</label
+                    >
+                </div>
+                <div
+                    class="border-b mb-4 pb-2 text-gray-900 dark:text-white dark:border-gray-700"
+                >
+                    محل سکونت
+                </div>
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label
+                            for="person-province"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >استان</label
+                        >
+                        <input
+                            type="text"
+                            id="person-province"
+                            v-model="person.last_name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="person-city"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            >شهر</label
+                        >
+                        <input
+                            type="text"
+                            id="person-city"
+                            v-model="person.last_name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
                     </div>
                 </div>
                 <div class="mb-6">

@@ -14,7 +14,7 @@ enum JobsEnum: string
     public function label(): string
     {
         return match ($this) {
-            static::HEAD => 'مدیر کل',
+            static::HEAD => 'مدیر',
             static::ACCOUNTANT => 'حسابدار',
             static::STOREMANAGER => 'مدیر فروشگاه',
             static::SALESMAN => 'فروشنده',

@@ -10,8 +10,8 @@ enum NationalitiesEnum: string
     public function label(): string
     {
         return match ($this) {
-            static::IR => 'ایران',
-            static::AF => 'افغانستان',
+            static::IR => 'ایرانی',
+            static::AF => 'افغان',
         };
     }
 

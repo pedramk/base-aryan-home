@@ -11,6 +11,13 @@ export default {
         './resources/**/*.vue',
     ],
     theme: {
+        screens: {
+            'sm': '640px',
+            'md': '768px',
+            'lg': '768px',
+            'xl': '768px',
+            '2xl': '768px',
+        },
         extend: {
             fontFamily: {
                 sans: ['IRANYekan', 'Figtree', ...defaultTheme.fontFamily.sans],

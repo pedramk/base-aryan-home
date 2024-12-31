@@ -2442,6 +2442,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"notivue@npm:^2.4.5":
+  version: 2.4.5
+  resolution: "notivue@npm:2.4.5"
+  peerDependencies:
+    "@nuxt/kit": ">=3.5.0"
+    "@nuxt/schema": ">=3.5.0"
+    defu: ">=6"
+  peerDependenciesMeta:
+    "@nuxt/kit":
+      optional: true
+    "@nuxt/schema":
+      optional: true
+    defu:
+      optional: true
+  checksum: 10c0/7a85bac526974fef77af6e959e0f1f9e240b9800aa72099fbbe9bc16d658475d9cc642085b23273d4c0d4281015d5d8e1d5bc8d358b53d545a06d4723cc8da2a
+  languageName: node
+  linkType: hard
+
 "object-assign@npm:^4.0.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
@@ -2849,6 +2867,7 @@ __metadata:
     axios: "npm:^1.7.4"
     concurrently: "npm:^9.0.1"
     laravel-vite-plugin: "npm:^1.0"
+    notivue: "npm:^2.4.5"
     postcss: "npm:^8.4.49"
     tailwindcss: "npm:^3.4.17"
     unplugin-vue-define-options: "npm:^1.5.3"

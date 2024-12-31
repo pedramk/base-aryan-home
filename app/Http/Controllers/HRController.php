@@ -6,20 +6,32 @@ use App\Http\Requests\StorePersonRequest;
 use App\Models\Person;
 use App\NationalitiesEnum;
 use App\JobsEnum;
+use App\PersianMonths;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Morilog\Jalali\CalendarUtils;
 
 class HRController extends Controller
 {
+    public function list(Request $request)
+    {
+        $people = Person::all();
+
+        return Inertia::render('HR/Person/List', [
+            'people' => $people,
+        ]);
+    }
+
     public function create()
     {
         $jobs = JobsEnum::optionsArray();
         $nationalities = NationalitiesEnum::optionsArray();
+        $months = PersianMonths::optionsArray();
 
         return Inertia::render('HR/Person/Create', [
             'jobs' => $jobs,
             'nationalities' => $nationalities,
+            'months' => $months,
         ]);
     }
 
@@ -34,5 +46,7 @@ class HRController extends Controller
         $data['job_start_date'] = $job_start_date;
 
         $person = Person::create($data);
+
+        return to_route('hr.people.list');
     }
 }

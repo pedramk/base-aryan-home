@@ -1,5 +1,7 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
 import { IconDiamondFilled } from "@tabler/icons-vue";
+import { slateTheme } from "notivue";
 </script>
 
 <template>
@@ -38,16 +40,16 @@ import { IconDiamondFilled } from "@tabler/icons-vue";
                     <li>
                         <a
                             href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
+                            class="text-gray-900 dark:text-white"
                             aria-current="page"
                             >پیشخان</a
                         >
                     </li>
                     <li>
-                        <a
-                            href="#"
-                            class="text-gray-900 dark:text-white hover:underline"
-                            >منابع انسانی</a
+                        <Link
+                            href="/hr/people"
+                            class="text-gray-900 dark:text-white"
+                            >منابع انسانی</Link
                         >
                     </li>
                 </ul>
@@ -56,8 +58,12 @@ import { IconDiamondFilled } from "@tabler/icons-vue";
     </nav>
 
     <div
-        class="flex-grow bg-white shadow dark:border-x md:mt-0 max-w-screen-md mx-auto xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+        class="flex-grow bg-white container shadow dark:border-x md:mt-0 mx-auto xl:p-0 dark:bg-gray-800 dark:border-gray-700"
     >
         <slot />
     </div>
+
+    <Notivue v-slot="item">
+        <Notification :item="item" :theme="slateTheme" />
+    </Notivue>
 </template>
