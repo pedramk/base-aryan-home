@@ -691,6 +691,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-vue@npm:^3.26.0":
+  version: 3.26.0
+  resolution: "@tabler/icons-vue@npm:3.26.0"
+  dependencies:
+    "@tabler/icons": "npm:3.26.0"
+  peerDependencies:
+    vue: ">=3.0.1"
+  checksum: 10c0/bae9c8a1a743fc4c0ecf01d5c6c4e0a184f1fc7385c707697468222add22ca84ce2c507a78bdd46b1103472281d08a37deebe134451a93b842fef6159647547d
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.26.0":
+  version: 3.26.0
+  resolution: "@tabler/icons@npm:3.26.0"
+  checksum: 10c0/60eee2f656f3b391d22f97fd9949913ed3bf19773e6c27b755f62edb67dc3ef2d347efebf486cca012599787326b2dc6ad94d6bf9a765def87e73119b84c32ae
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:1.0.6, @types/estree@npm:^1.0.0":
   version: 1.0.6
   resolution: "@types/estree@npm:1.0.6"
@@ -2824,6 +2842,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@inertiajs/vue3": "npm:^2.0.0"
+    "@tabler/icons-vue": "npm:^3.26.0"
     "@vitejs/plugin-vue": "npm:^5.2.1"
     "@vue-macros/volar": "npm:^0.30.8"
     autoprefixer: "npm:^10.4.20"

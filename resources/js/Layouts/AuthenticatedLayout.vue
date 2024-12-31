@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { IconDiamondFilled } from "@tabler/icons-vue";
+</script>
 
 <template>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -13,11 +15,12 @@
                 />
             </a>
             <div class="flex items-center space-x-6 rtl:space-x-reverse">
-                <!-- <a
-                    href="tel:5541251234"
-                    class="text-sm text-gray-500 dark:text-white hover:underline"
-                    >داخلی: 100</a
-                > -->
+                <div
+                    class="flex items-center rounded-lg py-1 px-3 text-sm text-gray-500 dark:text-white bg-blue-500 rtl:flex-row-reverse"
+                >
+                    <IconDiamondFilled :size="18" class="ms-1" />
+                    <span class="block pt-1">1520</span>
+                </div>
                 <!-- <a
                     href="#"
                     class="text-sm text-blue-600 dark:text-blue-500 hover:underline"

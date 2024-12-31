@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
+import { IconUserFilled } from "@tabler/icons-vue";
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -44,11 +45,12 @@ const submitPerson = () => {
     <Head title="Create" />
 
     <div class="">
-        <h1
-            class="p-6 border-b text-gray-900 dark:text-white dark:border-gray-700"
+        <div
+            class="flex items-center p-6 border-b text-gray-900 dark:text-white dark:border-gray-700"
         >
-            افزودن پرسنل جدید
-        </h1>
+            <IconUserFilled :size="20" />
+            <h1 class="ms-1">افزودن پرسنل جدید</h1>
+        </div>
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <form @submit.prevent="submitPerson">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -93,7 +95,7 @@ const submitPerson = () => {
                         <select
                             id="person-nationality"
                             v-model="person.nationality"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                             <option disabled selected>انتخاب تابعیت</option>
                             <option
@@ -183,7 +185,7 @@ const submitPerson = () => {
                         <select
                             id="person-job-title"
                             v-model="person.job_title"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                             <option disabled selected>انتخاب عنوان شغلی</option>
                             <option
