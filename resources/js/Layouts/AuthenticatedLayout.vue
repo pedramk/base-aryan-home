@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { IconDiamondFilled } from "@tabler/icons-vue";
 import { slateTheme } from "notivue";
 </script>
@@ -23,11 +23,12 @@ import { slateTheme } from "notivue";
                     <IconDiamondFilled :size="18" class="ms-1" />
                     <span class="block pt-1">1520</span>
                 </div>
-                <!-- <a
-                    href="#"
-                    class="text-sm text-blue-600 dark:text-blue-500 hover:underline"
-                    >پروفایل</a
-                > -->
+                <button
+                    @click="router.post('/logout')"
+                    class="text-sm text-blue-600 dark:text-blue-500"
+                >
+                    خروج
+                </button>
             </div>
         </div>
     </nav>
@@ -39,7 +40,7 @@ import { slateTheme } from "notivue";
                 >
                     <li>
                         <a
-                            href="#"
+                            href="/dashboard"
                             class="text-gray-900 dark:text-white"
                             aria-current="page"
                             >پیشخان</a
