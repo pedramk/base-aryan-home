@@ -22,6 +22,7 @@ yarn-error.log
 /.vscode
 /.zed
 
+.pnp.*
 .yarn/*
 !.yarn/cache
 !.yarn/patches
